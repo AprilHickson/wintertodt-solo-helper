@@ -1,5 +1,4 @@
 package com.WintertodtSoloHelper;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -68,12 +67,8 @@ public class WintertodtBrazier {
     }
 
     public void ProcessWidgets(Client client) {
-        if(wizardStatusWidget == null) {
-            wizardStatusWidget = client.getWidget(WintertodtSoloHelperPlugin.WINTERTODT_WIDGET_GROUP_ID, wizardStatusWidgetId);
-        }
-        if(brazierStatusWidget == null) {
-            brazierStatusWidget = client.getWidget(WintertodtSoloHelperPlugin.WINTERTODT_WIDGET_GROUP_ID, brazierStatusWidgetId);
-        }
+        wizardStatusWidget = client.getWidget(WintertodtSoloHelperPlugin.WINTERTODT_WIDGET_GROUP_ID, wizardStatusWidgetId);
+        brazierStatusWidget = client.getWidget(WintertodtSoloHelperPlugin.WINTERTODT_WIDGET_GROUP_ID, brazierStatusWidgetId);
 
         if(brazierStatusWidget != null) {
             if(brazierStatusWidget.getSpriteId() == UNLIT_SPRITE_ID) {
@@ -107,7 +102,19 @@ public class WintertodtBrazier {
     public void render(ModelOutlineRenderer modelOutlineRenderer, WintertodtSoloHelperConfig config, WintertodtSoloHelperPlugin plugin) {
         boolean thisIsMainLocation = config.brazier() == brazierLocation;
 
-        if(pyromancerAlive == false) {
+        int distanceFromPlayer = worldLocation.distanceTo(plugin.getPlayerLocation());
+
+        boolean isWithinDistance = distanceFromPlayer <= 15;
+
+        boolean shouldCurrentActivityStopRender = plugin.getCurrentActivity() == WintertodtActivity.LIGHTING_BRAZIER
+                                        || plugin.getCurrentActivity() == WintertodtActivity.FEEDING_BRAZIER
+                                        || plugin.getCurrentActivity() == WintertodtActivity.FIXING_BRAZIER;
+
+        boolean shouldDraw = !isWithinDistance || !shouldCurrentActivityStopRender;
+
+        boolean shouldDrawRoot = !isWithinDistance || plugin.getCurrentActivity() != WintertodtActivity.WOODCUTTING;
+
+        if(!pyromancerAlive) {
             if(pyromancer != null) {
                 modelOutlineRenderer.drawOutline(pyromancer, 6, config.getHighlightColor(), 6);
             }
@@ -116,34 +123,37 @@ public class WintertodtBrazier {
         int brumaKindlingCount = plugin.getBrumaKindlingCount();
         int brumaRootCount = plugin.getBrumaLogCount();
 
+        // Broken Brazier
         if(config.alwaysRepairBroken()) {
             if(status == BrazierStatus.BROKEN) {
-                modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
+                drawOutline(modelOutlineRenderer, brazierObject, config, true);
             }
         }
 
+        // Ending Game
         if(config.pointGoal() < plugin.getWintertodtPoints()) {
             if(status != BrazierStatus.LIT) {
-                modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
+                drawOutline(modelOutlineRenderer, brazierObject, config, shouldDraw);
             }
         }
 
+        // Main gameplay loop
         if (thisIsMainLocation) {
             if(status == BrazierStatus.UNLIT) {
                 if(plugin.getWintertodtHealth() > config.alwaysRelightHealth())
                 {
-                    modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
+                    drawOutline(modelOutlineRenderer, brazierObject, config, shouldDraw);
                 }
                 else if (plugin.getWintertodtHealth() > config.minRelightHealth())
                 {
                     if(brumaKindlingCount > 0)
                     {
                         if(brumaRootCount == 0) {
-                            modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
+                            drawOutline(modelOutlineRenderer, brazierObject, config, shouldDraw);
                         }
                     }
                     else if(plugin.getEmptyInventoryCount() != 0) {
-                        modelOutlineRenderer.drawOutline(brumaRootObject, 6, config.getHighlightColor(), 6);
+                        drawOutline(modelOutlineRenderer, brumaRootObject, config, shouldDrawRoot);
                     }
                 }
             }
@@ -151,21 +161,30 @@ public class WintertodtBrazier {
                 if(brumaKindlingCount > 0)
                 {
                     if(brumaRootCount == 0) {
-                        modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
+                        drawOutline(modelOutlineRenderer, brazierObject, config, shouldDraw);
                     }
                 }
                 else if(plugin.getEmptyInventoryCount() != 0) {
-                    modelOutlineRenderer.drawOutline(brumaRootObject, 6, config.getHighlightColor(), 6);
+                    drawOutline(modelOutlineRenderer, brumaRootObject, config, shouldDrawRoot);
                 }
             }
             else if(status == BrazierStatus.BROKEN) {
-                modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
+                drawOutline(modelOutlineRenderer, brazierObject, config, shouldDraw);
+                if(plugin.getEmptyInventoryCount() != 0) {
+                    drawOutline(modelOutlineRenderer, brumaRootObject, config, shouldDrawRoot);
+                }
             }
         }
         else if(config.multiFireRelightPercentage() < plugin.getWintertodtHealth()) {
             if(status == BrazierStatus.UNLIT) {
-                modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
+                drawOutline(modelOutlineRenderer, brazierObject, config, shouldDraw);
             }
+        }
+    }
+
+    private void drawOutline(ModelOutlineRenderer modelOutlineRenderer, GameObject gameObject, WintertodtSoloHelperConfig config, boolean shouldDraw) {
+        if(shouldDraw) {
+            modelOutlineRenderer.drawOutline(gameObject, 6, config.getHighlightColor(), 6);
         }
     }
 

@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
+import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.*;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.config.ConfigManager;
@@ -14,12 +15,15 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 //Burnables
+import static net.runelite.api.AnimationID.*;
 import static net.runelite.api.ItemID.*;
 import static net.runelite.api.ObjectID.SPROUTING_ROOTS;
 //Potions
 //Hammer
 
 import javax.inject.Inject;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 @PluginDescriptor(
@@ -73,6 +77,7 @@ public class WintertodtSoloHelperPlugin extends Plugin {
 	private Widget pointsWidget;
 	private Item[] inventoryItems;
 	private Item[] equipmentItems;
+	private Instant lastActionTime;
 	@Getter(AccessLevel.PACKAGE)
 	private int brumaLogCount;
 
@@ -109,12 +114,17 @@ public class WintertodtSoloHelperPlugin extends Plugin {
 	@Getter(AccessLevel.PACKAGE)
 	private TileObject knifeCrate;
 
-	//list
+	private PermanentGameObject potionCrateWest = new PermanentGameObject(POTION_CRATE, new WorldPoint(1626, 3982, 0));
+	private PermanentGameObject potionCrateEast = new PermanentGameObject(POTION_CRATE, new WorldPoint(1634, 3982, 0));
 	@Getter(AccessLevel.PACKAGE)
-	private List<TileObject> potionCrates = Lists.newArrayList();
+	private List<PermanentGameObject> potionCrates = Lists.newArrayList(potionCrateWest, potionCrateEast);
 
+	private PermanentGameObject sproutingRootsWest = new PermanentGameObject(SPROUTING_ROOTS, new WorldPoint(1611, 4007, 0));
+	private PermanentGameObject sproutingRootsEast = new PermanentGameObject(SPROUTING_ROOTS, new WorldPoint(1649, 4007, 0));
 	@Getter(AccessLevel.PACKAGE)
-	private List<TileObject> sproutingRoots = Lists.newArrayList();
+	private List<PermanentGameObject> sproutingRoots = Lists.newArrayList(sproutingRootsWest, sproutingRootsEast);
+
+	private List<PermanentGameObject> allPermanentObjects = Lists.newArrayList(potionCrateEast, potionCrateWest, sproutingRootsEast, sproutingRootsWest);
 
 	@Getter(AccessLevel.PACKAGE)
 	private TileObject tinderboxCrate;
@@ -130,6 +140,9 @@ public class WintertodtSoloHelperPlugin extends Plugin {
 
 	@Getter(AccessLevel.PACKAGE)
 	private int litBrazierCount;
+
+	@Getter(AccessLevel.PACKAGE)
+	private WintertodtActivity currentActivity = WintertodtActivity.IDLE;
 
 	@Override
 	protected void startUp() throws Exception {
@@ -196,7 +209,7 @@ public class WintertodtSoloHelperPlugin extends Plugin {
 			isInWintertodt = true;
 		}
 
-
+		checkActionTimeout();
 	}
 
 	@Subscribe
@@ -298,6 +311,7 @@ public class WintertodtSoloHelperPlugin extends Plugin {
 		healthWidget = null;
 		pointsWidget = null;
 		wintertodtHealth = 0;
+		currentActivity = WintertodtActivity.IDLE;
 	}
 
 	@Subscribe
@@ -313,26 +327,12 @@ public class WintertodtSoloHelperPlugin extends Plugin {
 		if(gameObject.getId() == KNIFE_CRATE) {
 			knifeCrate = gameObject;
 		}
-		if(gameObject.getId() == POTION_CRATE) {
-			//if potionCrate list contains a gameobject on the same location then remove it
-			for (TileObject potionCrate : potionCrates) {
-				if(potionCrate.getWorldLocation().getX() == gameObject.getWorldLocation().getX() && potionCrate.getWorldLocation().getY() == gameObject.getWorldLocation().getY()) {
-					potionCrates.remove(potionCrate);
-				}
-			}
 
-			potionCrates.add(gameObject);
+		for (PermanentGameObject permanentGameObject : allPermanentObjects)
+		{
+			permanentGameObject.setGameObject(gameObject);
 		}
-		if(gameObject.getId() == SPROUTING_ROOTS) {
-			//if roots list contains a gameobject on the same location then remove it
-			for (TileObject roots : sproutingRoots) {
-				if(roots.getWorldLocation().getX() == gameObject.getWorldLocation().getX() && roots.getWorldLocation().getY() == gameObject.getWorldLocation().getY()) {
-					sproutingRoots.remove(roots);
-				}
-			}
 
-			sproutingRoots.add(gameObject);
-		}
 		if(gameObject.getId() == TINDERBOX_CRATE) {
 			tinderboxCrate = gameObject;
 		}
@@ -361,6 +361,98 @@ public class WintertodtSoloHelperPlugin extends Plugin {
 			for (WintertodtBrazier brazier : braziers) {
 				brazier.updatePyromancer(npc);
 			}
+		}
+	}
+
+
+	@Subscribe
+	public void onAnimationChanged(final AnimationChanged event)
+	{
+		if (!isInWintertodt)
+		{
+			return;
+		}
+
+		final Player local = client.getLocalPlayer();
+
+		if (event.getActor() != local)
+		{
+			return;
+		}
+
+		final int animId = local.getAnimation();
+		switch (animId)
+		{
+			case WOODCUTTING_BRONZE:
+			case WOODCUTTING_IRON:
+			case WOODCUTTING_STEEL:
+			case WOODCUTTING_BLACK:
+			case WOODCUTTING_MITHRIL:
+			case WOODCUTTING_ADAMANT:
+			case WOODCUTTING_RUNE:
+			case WOODCUTTING_GILDED:
+			case WOODCUTTING_DRAGON:
+			case WOODCUTTING_DRAGON_OR:
+			case WOODCUTTING_INFERNAL:
+			case WOODCUTTING_3A_AXE:
+			case WOODCUTTING_CRYSTAL:
+			case WOODCUTTING_TRAILBLAZER:
+				setActivity(WintertodtActivity.WOODCUTTING);
+				break;
+
+			case FLETCHING_BOW_CUTTING:
+				setActivity(WintertodtActivity.FLETCHING);
+				break;
+
+			case LOOKING_INTO:
+				setActivity(WintertodtActivity.FEEDING_BRAZIER);
+				break;
+
+			case FIREMAKING:
+				setActivity(WintertodtActivity.LIGHTING_BRAZIER);
+				break;
+
+			case CONSTRUCTION:
+			case CONSTRUCTION_IMCANDO:
+				setActivity(WintertodtActivity.FIXING_BRAZIER);
+				break;
+		}
+	}
+
+	public WorldPoint getPlayerLocation() {
+		return client.getLocalPlayer().getWorldLocation();
+	}
+
+	public Player getPlayer() {
+		return client.getLocalPlayer();
+	}
+
+	private void setActivity(WintertodtActivity action)
+	{
+		currentActivity = action;
+		lastActionTime = Instant.now();
+	}
+
+	private void checkActionTimeout()
+	{
+		if (currentActivity == WintertodtActivity.IDLE)
+		{
+			return;
+		}
+
+		int currentAnimation = client.getLocalPlayer() != null ? client.getLocalPlayer().getAnimation() : -1;
+		if (currentAnimation != IDLE || lastActionTime == null)
+		{
+			return;
+		}
+
+		Duration actionTimeout = Duration.ofSeconds(3);
+		Duration sinceAction = Duration.between(lastActionTime, Instant.now());
+
+		if (sinceAction.compareTo(actionTimeout) >= 0)
+		{
+			log.debug("Activity timeout!");
+			currentActivity = WintertodtActivity.IDLE;
 		}
 	}
 }

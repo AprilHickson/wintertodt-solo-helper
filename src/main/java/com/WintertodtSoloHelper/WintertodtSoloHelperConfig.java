@@ -56,6 +56,18 @@ public interface WintertodtSoloHelperConfig extends Config
         return true;
     }
 
+    //highlight player when inventory actions needed
+    @ConfigItem(
+            position = 2,
+            keyName = "highlightPlayer",
+            name = "Highlight Player",
+            description = "Highlights player when inventory actions needed"
+    )
+    default boolean highlightPlayer()
+    {
+        return true;
+    }
+
     // What point goal before ending
     @ConfigItem(
             position = 2,
@@ -242,4 +254,6 @@ public interface WintertodtSoloHelperConfig extends Config
     {
         return true;
     }
+
+
 }

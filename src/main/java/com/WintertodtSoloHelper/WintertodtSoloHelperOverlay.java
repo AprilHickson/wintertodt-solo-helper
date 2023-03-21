@@ -125,16 +125,20 @@ class WintertodtSoloHelperOverlay extends OverlayPanel
 
 			if(plugin.getPotionDoseCount() < wintertodtAFKConfig.minPotionDose()) {
 				if(plugin.getUnfinishedCount() == 0) {
-					//loop through potioncrates
-					for (TileObject crate : plugin.getPotionCrates()) {
-						modelOutlineRenderer.drawOutline(crate, 6, wintertodtAFKConfig.getHighlightColor(), 6);
+					for (PermanentGameObject crate : plugin.getPotionCrates()) {
+						modelOutlineRenderer.drawOutline(crate.getGameObject(), 6, wintertodtAFKConfig.getHighlightColor(), 6);
 					}
 				}
 				if(plugin.getHerbCount() == 0) {
-					for (TileObject root : plugin.getSproutingRoots()) {
-						modelOutlineRenderer.drawOutline(root, 6, wintertodtAFKConfig.getHighlightColor(), 6);
+					for (PermanentGameObject root : plugin.getSproutingRoots()) {
+						modelOutlineRenderer.drawOutline(root.getGameObject(), 6, wintertodtAFKConfig.getHighlightColor(), 6);
 					}
 				}
+			}
+
+			if (wintertodtAFKConfig.highlightPlayer() && plugin.getBrumaLogCount() > 0 && plugin.getCurrentActivity() != WintertodtActivity.WOODCUTTING && plugin.getCurrentActivity() != WintertodtActivity.FLETCHING) {
+				log.debug(plugin.getPlayer() + " " + plugin.getPlayer().getWorldLocation());
+				modelOutlineRenderer.drawOutline(plugin.getPlayer(), 6, wintertodtAFKConfig.getHighlightColor(), 6);
 			}
 
 			for (WintertodtBrazier brazier : plugin.getBraziers()) {
