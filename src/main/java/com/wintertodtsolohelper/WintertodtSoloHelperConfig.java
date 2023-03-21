@@ -28,6 +28,8 @@ package net.runelite.client.plugins.wintertodtafk;
 
 import net.runelite.client.config.*;
 
+import java.awt.*;
+
 @ConfigGroup("wintertodt-afk")
 public interface WintertodtSoloHelperConfig extends Config
 {
@@ -72,7 +74,7 @@ public interface WintertodtSoloHelperConfig extends Config
 
     // which brazier you prefer to use
     @ConfigItem(
-            position = 2,
+            position = 3,
             keyName = "brazier",
             name = "Brazier",
             description = "Which brazier you prefer to use"
@@ -82,10 +84,22 @@ public interface WintertodtSoloHelperConfig extends Config
         return BrazierLocation.SouthEast;
     }
 
+    @Alpha
+    @ConfigItem(
+            keyName = "overlayColor",
+            name = "Highlight Color",
+            description = "Color of highlights",
+            position = 5
+    )
+    default Color getHighlightColor()
+    {
+        return Color.RED;
+    }
+
     @ConfigSection(
             name = "Percentages",
             description = "All the options for how you solo Wintertodt",
-            position = 3,
+            position = 6,
             closedByDefault = false
     )
     String percentages = "percentages";
@@ -147,7 +161,7 @@ public interface WintertodtSoloHelperConfig extends Config
     @ConfigSection(
             name = "Items",
             description = "Should the plugin highlight crates for hammers, knifes, etc",
-            position = 4,
+            position = 7,
             closedByDefault = true
     )
     String items = "items";
@@ -211,7 +225,7 @@ public interface WintertodtSoloHelperConfig extends Config
     @ConfigSection(
             name = "Misc",
             description = "Miscellaneous options",
-            position = 5,
+            position = 6,
             closedByDefault = true
     )
     String misc = "misc";

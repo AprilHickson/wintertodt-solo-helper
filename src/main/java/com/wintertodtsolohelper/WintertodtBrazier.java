@@ -111,7 +111,7 @@ public class WintertodtBrazier {
 
         if(pyromancerAlive == false) {
             if(pyromancer != null) {
-                modelOutlineRenderer.drawOutline(pyromancer, 6, Color.RED, 6);
+                modelOutlineRenderer.drawOutline(pyromancer, 6, config.getHighlightColor(), 6);
             }
         }
 
@@ -119,13 +119,13 @@ public class WintertodtBrazier {
 
         if(config.alwaysRepairBroken()) {
             if(status == BrazierStatus.BROKEN) {
-                modelOutlineRenderer.drawOutline(brazierObject, 6, Color.RED, 6);
+                modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
             }
         }
 
         if(config.pointGoal() < plugin.getWintertodtPoints()) {
             if(status != BrazierStatus.LIT) {
-                modelOutlineRenderer.drawOutline(brazierObject, 6, Color.RED, 6);
+                modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
             }
         }
 
@@ -133,33 +133,33 @@ public class WintertodtBrazier {
             if(status == BrazierStatus.UNLIT) {
                 if(plugin.getWintertodtHealth() > config.alwaysRelightHealth())
                 {
-                    modelOutlineRenderer.drawOutline(brazierObject, 6, Color.RED, 6);
+                    modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
                 }
                 else if (plugin.getWintertodtHealth() > config.minRelightHealth())
                 {
                     if(burnItemCount > 0 && plugin.getEmptyInventoryCount() == 0) {
-                        modelOutlineRenderer.drawOutline(brazierObject, 6, Color.RED, 6);
+                        modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
                     }
                     else {
-                        modelOutlineRenderer.drawOutline(brumaRootObject, 6, Color.RED, 6);
+                        modelOutlineRenderer.drawOutline(brumaRootObject, 6, config.getHighlightColor(), 6);
                     }
                 }
             }
             else if(status == BrazierStatus.LIT) {
                 if(burnItemCount > 0 && plugin.getEmptyInventoryCount() == 0) {
-                    modelOutlineRenderer.drawOutline(brazierObject, 6, Color.RED, 6);
+                    modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
                 }
                 else {
-                    modelOutlineRenderer.drawOutline(brumaRootObject, 6, Color.RED, 6);
+                    modelOutlineRenderer.drawOutline(brumaRootObject, 6, config.getHighlightColor(), 6);
                 }
             }
             else if(status == BrazierStatus.BROKEN) {
-                modelOutlineRenderer.drawOutline(brazierObject, 6, Color.RED, 6);
+                modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
             }
         }
         else if(config.multiFireRelightPercentage() < plugin.getWintertodtHealth()) {
             if(status == BrazierStatus.UNLIT) {
-                modelOutlineRenderer.drawOutline(brazierObject, 6, Color.RED, 6);
+                modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
             }
         }
     }

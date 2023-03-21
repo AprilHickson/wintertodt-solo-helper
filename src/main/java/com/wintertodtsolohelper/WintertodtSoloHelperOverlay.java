@@ -82,29 +82,29 @@ class WintertodtSoloHelperOverlay extends OverlayPanel
 
 			panelComponent.getChildren().add(LineComponent.builder()
 					.left("Potion Doses: ")
-					.leftColor(wintertodtAFKConfig.minPotionDose() <= plugin.getPotionDoseCount() ? Color.WHITE : Color.RED)
+					.leftColor(wintertodtAFKConfig.minPotionDose() <= plugin.getPotionDoseCount() ? Color.WHITE : wintertodtAFKConfig.getHighlightColor())
 					.right(String.valueOf(plugin.getPotionDoseCount()))
-					.rightColor(wintertodtAFKConfig.minPotionDose() <= plugin.getPotionDoseCount() ? Color.WHITE : Color.RED)
+					.rightColor(wintertodtAFKConfig.minPotionDose() <= plugin.getPotionDoseCount() ? Color.WHITE : wintertodtAFKConfig.getHighlightColor())
 					.build());
 
 			if(wintertodtAFKConfig.warnForHammer() && !plugin.isHasHammer()) {
 				panelComponent.getChildren().add(TitleComponent.builder()
 						.text("Missing Hammer")
-						.color(Color.RED)
+						.color(wintertodtAFKConfig.getHighlightColor())
 						.build());
 			}
 
 			if(wintertodtAFKConfig.warnForKnife() && !plugin.isHasKnife()) {
 				panelComponent.getChildren().add(TitleComponent.builder()
 						.text("Missing Knife")
-						.color(Color.RED)
+						.color(wintertodtAFKConfig.getHighlightColor())
 						.build());
 			}
 
 			if(wintertodtAFKConfig.warnForTinderbox() && !plugin.isHasTinderbox()) {
 				panelComponent.getChildren().add(TitleComponent.builder()
 						.text("Missing Tinderbox")
-						.color(Color.RED)
+						.color(wintertodtAFKConfig.getHighlightColor())
 						.build());
 			}
 		}
@@ -112,27 +112,27 @@ class WintertodtSoloHelperOverlay extends OverlayPanel
 		if(wintertodtAFKConfig.highlightObjects())
 		{
 			if(wintertodtAFKConfig.warnForHammer() && !plugin.isHasHammer()) {
-				modelOutlineRenderer.drawOutline(plugin.getHammerCrate(), 6, Color.RED, 6);
+				modelOutlineRenderer.drawOutline(plugin.getHammerCrate(), 6, wintertodtAFKConfig.getHighlightColor(), 6);
 			}
 
 			if(wintertodtAFKConfig.warnForKnife() && !plugin.isHasKnife()) {
-				modelOutlineRenderer.drawOutline(plugin.getKnifeCrate(), 6, Color.RED, 6);
+				modelOutlineRenderer.drawOutline(plugin.getKnifeCrate(), 6, wintertodtAFKConfig.getHighlightColor(), 6);
 			}
 
 			if(wintertodtAFKConfig.warnForTinderbox() && !plugin.isHasTinderbox()) {
-				modelOutlineRenderer.drawOutline(plugin.getTinderboxCrate(), 6, Color.RED, 6);
+				modelOutlineRenderer.drawOutline(plugin.getTinderboxCrate(), 6, wintertodtAFKConfig.getHighlightColor(), 6);
 			}
 
 			if(plugin.getPotionDoseCount() < wintertodtAFKConfig.minPotionDose()) {
 				if(plugin.getUnfinishedCount() == 0) {
 					//loop through potioncrates
 					for (TileObject crate : plugin.getPotionCrates()) {
-						modelOutlineRenderer.drawOutline(crate, 6, Color.RED, 6);
+						modelOutlineRenderer.drawOutline(crate, 6, wintertodtAFKConfig.getHighlightColor(), 6);
 					}
 				}
 				if(plugin.getHerbCount() == 0) {
 					for (TileObject root : plugin.getSproutingRoots()) {
-						modelOutlineRenderer.drawOutline(root, 6, Color.RED, 6);
+						modelOutlineRenderer.drawOutline(root, 6, wintertodtAFKConfig.getHighlightColor(), 6);
 					}
 				}
 			}
