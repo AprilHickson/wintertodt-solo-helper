@@ -1,4 +1,4 @@
-package com.aprilht.runelite.WintertodtSoloHelper;
+package com.WintertodtSoloHelper;
 
 import lombok.AccessLevel;
 import lombok.Getter;

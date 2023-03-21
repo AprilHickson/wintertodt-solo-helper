@@ -1,4 +1,4 @@
-package com.aprilht.runelite.WintertodtSoloHelper;
+package com.WintertodtSoloHelper;
 
 public enum BrazierStatus {
     LIT,
