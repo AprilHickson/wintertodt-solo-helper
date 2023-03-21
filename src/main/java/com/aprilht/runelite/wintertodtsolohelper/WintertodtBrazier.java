@@ -107,7 +107,7 @@ public class WintertodtBrazier {
     }
 
     public void render(ModelOutlineRenderer modelOutlineRenderer, WintertodtSoloHelperConfig config, WintertodtSoloHelperPlugin plugin) {
-        var thisIsMainLocation = config.brazier() == brazierLocation;
+        boolean thisIsMainLocation = config.brazier() == brazierLocation;
 
         if(pyromancerAlive == false) {
             if(pyromancer != null) {
