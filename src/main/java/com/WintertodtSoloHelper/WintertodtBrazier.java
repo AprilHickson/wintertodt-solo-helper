@@ -148,10 +148,13 @@ public class WintertodtBrazier {
                 }
             }
             else if(status == BrazierStatus.LIT) {
-                if(brumaKindlingCount > 0 && plugin.getEmptyInventoryCount() == 0) {
-                    modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
+                if(brumaKindlingCount > 0)
+                {
+                    if(brumaRootCount == 0) {
+                        modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
+                    }
                 }
-                else {
+                else if(plugin.getEmptyInventoryCount() != 0) {
                     modelOutlineRenderer.drawOutline(brumaRootObject, 6, config.getHighlightColor(), 6);
                 }
             }

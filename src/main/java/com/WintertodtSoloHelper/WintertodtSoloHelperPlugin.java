@@ -1,29 +1,3 @@
-/*
- * Copyright (c) 2018, terminatusx <jbfleischman@gmail.com>
- * Copyright (c) 2018, Adam <Adam@sigterm.info>
- * Copyright (c) 2020, loldudester <HannahRyanster@gmail.com>
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 package com.WintertodtSoloHelper;
 
 import com.google.common.collect.Lists;
@@ -49,9 +23,9 @@ import javax.inject.Inject;
 import java.util.List;
 
 @PluginDescriptor(
-	name = "Wintertodt Solo Helper",
-	description = "Helpful Highlighting and data for Wintertodt Soloers",
-	tags = {"minigame", "firemaking", "boss"}
+		name = "Wintertodt Solo Helper",
+		description = "Helpful Highlighting and data for Wintertodt Soloers",
+		tags = {"minigame", "firemaking", "boss"}
 )
 @Slf4j
 public class WintertodtSoloHelperPlugin extends Plugin {
@@ -182,10 +156,10 @@ public class WintertodtSoloHelperPlugin extends Plugin {
 
 		if(isInWintertodt)
 		{
-			if(healthWidget == null) {
-				healthWidget = client.getWidget(WINTERTODT_WIDGET_GROUP_ID, WINTERTODT_HEALTH_WIDGET_ID);
-			}
-			else {
+			healthWidget = client.getWidget(WINTERTODT_WIDGET_GROUP_ID, WINTERTODT_HEALTH_WIDGET_ID);
+			pointsWidget = client.getWidget(WINTERTODT_WIDGET_GROUP_ID, WINTERTODT_POINTS_WIDGET_ID);
+
+			if (healthWidget != null) {
 				// widget.getText() returns "Wintertodt's Energy: 100%" so we need to get an int
 				String text = healthWidget.getText();
 				if(text != null && text != "" && text.replaceAll("[^0-9]", "") != "")
@@ -194,10 +168,7 @@ public class WintertodtSoloHelperPlugin extends Plugin {
 				}
 			}
 
-			if(pointsWidget == null) {
-				pointsWidget = client.getWidget(WINTERTODT_WIDGET_GROUP_ID, WINTERTODT_POINTS_WIDGET_ID);
-			}
-			else {
+			if (pointsWidget != null) {
 				// widget.getText() returns "Points 122" so we need to get an int
 				String text = pointsWidget.getText();
 				if(text != null && text != "" && text.replaceAll("[^0-9]", "") != "")
@@ -325,6 +296,7 @@ public class WintertodtSoloHelperPlugin extends Plugin {
 	private void reset()
 	{
 		healthWidget = null;
+		pointsWidget = null;
 		wintertodtHealth = 0;
 	}
 
@@ -344,8 +316,8 @@ public class WintertodtSoloHelperPlugin extends Plugin {
 		if(gameObject.getId() == POTION_CRATE) {
 			//if potionCrate list contains a gameobject on the same location then remove it
 			for (TileObject potionCrate : potionCrates) {
-				if(potionCrate.getWorldLocation().equals(gameObject.getWorldLocation())) {
-					potionCrates.remove(gameObject);
+				if(potionCrate.getWorldLocation().getX() == gameObject.getWorldLocation().getX() && potionCrate.getWorldLocation().getY() == gameObject.getWorldLocation().getY()) {
+					potionCrates.remove(potionCrate);
 				}
 			}
 
@@ -354,8 +326,8 @@ public class WintertodtSoloHelperPlugin extends Plugin {
 		if(gameObject.getId() == SPROUTING_ROOTS) {
 			//if roots list contains a gameobject on the same location then remove it
 			for (TileObject roots : sproutingRoots) {
-				if(roots.getWorldLocation().equals(gameObject.getWorldLocation())) {
-					sproutingRoots.remove(gameObject);
+				if(roots.getWorldLocation().getX() == gameObject.getWorldLocation().getX() && roots.getWorldLocation().getY() == gameObject.getWorldLocation().getY()) {
+					sproutingRoots.remove(roots);
 				}
 			}
 
