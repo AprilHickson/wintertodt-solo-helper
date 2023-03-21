@@ -20,9 +20,23 @@ When you enter the Wintertodt Region an overlay will appear.
 
 If you open the settings for Wintertodt Solo Helper you will be able to see all the options you can change.
 
-![](https://i.imgur.com/y838zEZ.png)
+![](https://i.imgur.com/ijcjCJI.png)
 
 You can change which brazier is your "Main Brazier" by choosing from the "Brazier" dropdown. This will default to "Southeast"
+
+## Examples
+
+Highlighting when you need to relight the brazier
+![](https://i.imgur.com/DXtK4AH.mp4)
+
+Highlighting when it's time to chop logs
+![](https://i.imgur.com/Sw99L97.mp4)
+
+Highlighting when it's time to heal the pyromancer 
+![](https://i.imgur.com/Yn2t1gi.mp4)
+
+Highlighting player when it's time to fletch
+![](https://i.imgur.com/2PL5hA3.mp4)
 
 ## Help and discussion
 
