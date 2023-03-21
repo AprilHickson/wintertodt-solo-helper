@@ -1,4 +1,4 @@
-package net.runelite.client.plugins.wintertodtafk;
+package com.aprilht.runelite.WintertodtSoloHelper;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,8 +9,6 @@ import net.runelite.api.NPC;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.ui.overlay.outline.ModelOutlineRenderer;
-
-import java.awt.*;
 
 @Slf4j
 public class WintertodtBrazier {

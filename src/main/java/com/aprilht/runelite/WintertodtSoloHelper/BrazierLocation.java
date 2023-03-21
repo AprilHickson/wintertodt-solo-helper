@@ -1,4 +1,4 @@
-package net.runelite.client.plugins.wintertodtafk;
+package com.aprilht.runelite.WintertodtSoloHelper;
 
 public enum BrazierLocation {
     SouthEast,
