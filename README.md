@@ -2,6 +2,8 @@
 
 This plugin is intended to assist in soloing Wintertodt. By highlighting brazier when it's safe to light without killing it. 
 
+![](https://i.imgur.com/pcLiJRh.png)
+
 ## Using Wintertodt Solo Helper 
 
 Firstly, download the Wintertodt Solo Helper from the Runelite Plugin Hub.
