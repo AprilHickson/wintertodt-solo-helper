@@ -10,7 +10,7 @@ Firstly, download the Wintertodt Solo Helper from the Runelite Plugin Hub.
 
 When you enter the Wintertodt Region an overlay will appear.
 
-![](https://i.imgur.com/3jC3EKd.png)
+![](https://i.imgur.com/SRyJta8.png)
 
 - This will show you Wintertodt's current health
 - How many Braziers are currently lit
