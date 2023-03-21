@@ -27,7 +27,7 @@ You can change which brazier is your "Main Brazier" by choosing from the "Brazie
 ## Examples
 
 Highlighting when you need to relight the brazier
-![](https://i.imgur.com/DXtK4AH.gif)
+![](https://github.com/AprilHickson/wintertodt-solo-helper/blob/master/misc/WhenToLightAndFeed.gif?raw=true)
 
 Highlighting when it's time to chop logs
 ![](https://i.imgur.com/Sw99L97.gif)
