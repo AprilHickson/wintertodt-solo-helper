@@ -136,8 +136,11 @@ public class WintertodtBrazier {
                 }
                 else if (plugin.getWintertodtHealth() > config.minRelightHealth())
                 {
-                    if(brumaKindlingCount > 0 && brumaRootCount == 0) {
-                        modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
+                    if(brumaKindlingCount > 0)
+                    {
+                        if(brumaRootCount == 0) {
+                            modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
+                        }
                     }
                     else if(plugin.getEmptyInventoryCount() != 0) {
                         modelOutlineRenderer.drawOutline(brumaRootObject, 6, config.getHighlightColor(), 6);
