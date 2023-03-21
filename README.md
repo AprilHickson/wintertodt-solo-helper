@@ -20,7 +20,7 @@ When you enter the Wintertodt Region an overlay will appear.
 
 If you open the settings for Wintertodt Solo Helper you will be able to see all the options you can change.
 
-![](https://i.imgur.com/ijcjCJI.png)
+![](https://i.imgur.com/KcwPTrF.png)
 
 You can change which brazier is your "Main Brazier" by choosing from the "Brazier" dropdown. This will default to "Southeast"
 
