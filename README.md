@@ -27,16 +27,16 @@ You can change which brazier is your "Main Brazier" by choosing from the "Brazie
 ## Examples
 
 Highlighting when you need to relight the brazier
-![](https://i.imgur.com/DXtK4AH.mp4)
+![](https://i.imgur.com/DXtK4AH.gif)
 
 Highlighting when it's time to chop logs
-![](https://i.imgur.com/Sw99L97.mp4)
+![](https://i.imgur.com/Sw99L97.gif)
 
 Highlighting when it's time to heal the pyromancer 
-![](https://i.imgur.com/Yn2t1gi.mp4)
+![](https://i.imgur.com/Yn2t1gi.gif)
 
 Highlighting player when it's time to fletch
-![](https://i.imgur.com/2PL5hA3.mp4)
+![](https://i.imgur.com/2PL5hA3.gif)
 
 ## Help and discussion
 
