@@ -113,7 +113,8 @@ public class WintertodtBrazier {
             }
         }
 
-        int burnItemCount = plugin.getBrumaKindlingCount();
+        int brumaKindlingCount = plugin.getBrumaKindlingCount();
+        int brumaRootCount = plugin.getBrumaLogCount();
 
         if(config.alwaysRepairBroken()) {
             if(status == BrazierStatus.BROKEN) {
@@ -135,16 +136,16 @@ public class WintertodtBrazier {
                 }
                 else if (plugin.getWintertodtHealth() > config.minRelightHealth())
                 {
-                    if(burnItemCount > 0 && plugin.getEmptyInventoryCount() == 0) {
+                    if(brumaKindlingCount > 0 && brumaRootCount == 0) {
                         modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
                     }
-                    else {
+                    else if(plugin.getEmptyInventoryCount() != 0) {
                         modelOutlineRenderer.drawOutline(brumaRootObject, 6, config.getHighlightColor(), 6);
                     }
                 }
             }
             else if(status == BrazierStatus.LIT) {
-                if(burnItemCount > 0 && plugin.getEmptyInventoryCount() == 0) {
+                if(brumaKindlingCount > 0 && plugin.getEmptyInventoryCount() == 0) {
                     modelOutlineRenderer.drawOutline(brazierObject, 6, config.getHighlightColor(), 6);
                 }
                 else {
