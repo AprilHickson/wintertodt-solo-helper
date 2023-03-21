@@ -30,13 +30,13 @@ Highlighting when you need to relight the brazier
 ![](https://github.com/AprilHickson/wintertodt-solo-helper/blob/master/misc/WhenToLightAndFeed.gif?raw=true)
 
 Highlighting when it's time to chop logs
-![](https://i.imgur.com/Sw99L97.gif)
+![](https://github.com/AprilHickson/wintertodt-solo-helper/blob/master/misc/ChopLogs.gif?raw=true)
 
 Highlighting when it's time to heal the pyromancer 
-![](https://i.imgur.com/Yn2t1gi.gif)
+![](https://github.com/AprilHickson/wintertodt-solo-helper/blob/master/misc/HealPyromancer.gif?raw=true)
 
 Highlighting player when it's time to fletch
-![](https://i.imgur.com/2PL5hA3.gif)
+![](https://github.com/AprilHickson/wintertodt-solo-helper/blob/master/misc/TimeToFletch.gif?raw=true)
 
 ## Help and discussion
 
