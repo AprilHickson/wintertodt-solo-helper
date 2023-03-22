@@ -107,8 +107,7 @@ public class WintertodtBrazier {
         boolean isWithinDistance = distanceFromPlayer <= 15;
 
         boolean shouldCurrentActivityStopRender = plugin.getCurrentActivity() == WintertodtActivity.LIGHTING_BRAZIER
-                                        || plugin.getCurrentActivity() == WintertodtActivity.FEEDING_BRAZIER
-                                        || plugin.getCurrentActivity() == WintertodtActivity.FIXING_BRAZIER;
+                                        || plugin.getCurrentActivity() == WintertodtActivity.FEEDING_BRAZIER;
 
         boolean shouldDraw = !isWithinDistance || !shouldCurrentActivityStopRender;
 
