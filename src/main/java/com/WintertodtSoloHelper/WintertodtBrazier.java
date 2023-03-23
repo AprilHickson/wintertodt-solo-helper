@@ -169,7 +169,7 @@ public class WintertodtBrazier {
             }
             else if(status == BrazierStatus.BROKEN) {
                 drawOutline(modelOutlineRenderer, brazierObject, config, shouldDraw);
-                if (plugin.getEmptyInventoryCount() != 0 && brumaKindlingCount != 0) {
+                if (plugin.getEmptyInventoryCount() != 0 && brumaKindlingCount == 0) {
                     drawOutline(modelOutlineRenderer, brumaRootObject, config, shouldDrawRoot);
                 }
             }
